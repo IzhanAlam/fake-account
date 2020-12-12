@@ -1,5 +1,6 @@
 from t_mail_inbox import mail_inbox
 from fake_acc import create_facc
+import json
 if __name__ == "__main__":
 
     
@@ -30,7 +31,7 @@ if __name__ == "__main__":
         mailbox.add_rand_email()
 
     #Print the number of emails in socket
-    for x in range(len(mailbox.get_email())):
+    for x in range(len(mailbox.get_email())-1):
         print(mailbox.get_email()[x])
         #Write to file the email accounts
         with open ('email_acc.txt','a') as out:
@@ -51,17 +52,16 @@ if __name__ == "__main__":
         json_val = (mailbox.wait_for_email())
         #Get URL from the json.loads
         matches = mailbox.find_links(json_val)
-        with open('emails.txt','a') as out:
-            out.write(json_val)
+        with open('emails_rec.txt','a') as out:
+            out.write(json.dumps(json_val, sort_keys=True, indent = 4))
             out.write('\n')
-            out.write(matches)
-            out.write('\n')
+            for x in matches:
+                out.write(x)
+                out.write('\n')
 
         print(matches)
         print(json_val)
     
-    
-
 
 
 
